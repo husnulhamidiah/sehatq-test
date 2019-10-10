@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   def create
     user = User.create!(user_params)
-    auth_token = AuthenticateUser.new(user.username, user.password).call
+    auth_token = AuthenticateUser.new(user.email, user.password).call
     json_response({ data: user.as_json.merge!(token: auth_token) }, :created)
   end
   
@@ -23,6 +23,7 @@ class UsersController < ApplicationController
     params.permit(
       :username,
       :name,
+      :email,
       :password,
       :password_confirmation
     )

@@ -6,10 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.create! username: 'husnulhamidiah', password: 'password', password_confirmation: 'password', name: 'husnul hamidiah'
-User.create! username: 'husnulanwari', password: 'password', password_confirmation: 'password', name: 'husnul anwari'
-User.create! username: 'lanaya', password: 'password', password_confirmation: 'password', name: 'templar assasin'
-User.create! username: 'barratum', password: 'password', password_confirmation: 'password', name: 'spirit breaker'
+User.create! username: 'husnulhamidiah', password: 'password', password_confirmation: 'password', name: 'husnul hamidiah', email: 'husnulhamidiah@gmail.com'
+User.create! username: 'husnulanwari', password: 'password', password_confirmation: 'password', name: 'husnul anwari', email: 'husnulanwari@gmail.com'
+User.create! username: 'lanaya', password: 'password', password_confirmation: 'password', name: 'templar assasin', email: 'lanaya@gmail.com'
+User.create! username: 'barratum', password: 'password', password_confirmation: 'password', name: 'spirit breaker', email: 'barratum@gmail.com'
 
 Hospital.create! name: 'rosh pit rs'
 Hospital.create! name: 'secret shop rs'
