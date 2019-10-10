@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   end
   resources :appointments, only: [:create]
   resources :doctors, only: [:index] do
+    post 'signup', to: 'doctors#create', on: :collection
     get 'appointments', on: :member
   end
   resources :hospitals, only: [:index]
