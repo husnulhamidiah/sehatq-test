@@ -9,7 +9,7 @@ class AppointmentsController < ApplicationController
     appointment.end_at = end_date
     appointment.save!
 
-    render json: AppointmentSerializer.new(appointment).serialized_json
+    render json: AppointmentSerializer.new(appointment, { include: [:user, :doctor] }).serialized_json
   end
 
   private

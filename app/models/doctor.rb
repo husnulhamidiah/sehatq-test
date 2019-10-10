@@ -5,5 +5,5 @@ class Doctor < ApplicationRecord
   belongs_to :hospital
 
   # validations
-  validates_presence_of :name, :hospital_id, :start_at, :end_at
+  validates_presence_of :hospital_id, :start_at, :end_at
 end

@@ -6,5 +6,5 @@ class User < ApplicationRecord
   has_one :doctor
 
   # validations
-  validates_presence_of :username, :password_digest
+  validates_presence_of :username, :password_digest, :name
 end
