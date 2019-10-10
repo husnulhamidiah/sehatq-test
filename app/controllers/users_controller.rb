@@ -4,7 +4,13 @@ class UsersController < ApplicationController
 
   def create
     user = User.create!(user_params)
-    render json: UserSerializer.new(user).serialized_json
+    auth_token = AuthenticateUser.new(user.email, user.password).call
+    
+    json_response({
+      data: UserSerializer.new(user).as_json['data'],
+      message: 'Account created successfully',
+      token: auth_token
+    }, :created)
   end
   
   def appointments
