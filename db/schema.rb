@@ -15,23 +15,24 @@ ActiveRecord::Schema.define(version: 2019_10_08_125640) do
   create_table "appointments", force: :cascade do |t|
     t.integer "user_id"
     t.integer "doctor_id"
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.datetime "start_at"
+    t.datetime "end_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "doctors", force: :cascade do |t|
+    t.integer "user_id"
     t.string "name"
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.time "start_at"
+    t.time "end_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
-    t.string "password"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
