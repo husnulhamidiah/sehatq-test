@@ -6,4 +6,5 @@ class Doctor < ApplicationRecord
 
   # validations
   validates_presence_of :hospital_id, :start_at, :end_at
+  validates :user_id, uniqueness: true
 end
