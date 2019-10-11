@@ -28,7 +28,9 @@ class DoctorsController < ApplicationController
     return json_response({ message: 'Unauthorized' }, :unauthorized) if @current_user.doctor.id != params[:id].to_i
     
     appointments = Appointment.includes(:user, :doctor).where(doctor_id: @resource.id)
-    render json: AppointmentSerializer.new(appointments, { include: [:user, :doctor] }).serialized_json
+    json_response({
+      data: AppointmentSerializer.new(appointments, { include: [:user, :doctor] }).as_json
+    }, :ok)
   end
 
   private
