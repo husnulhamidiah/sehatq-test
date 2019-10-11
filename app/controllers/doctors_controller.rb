@@ -4,7 +4,9 @@ class DoctorsController < ApplicationController
 
   def index
     doctors = Doctor.includes(:hospital)
-    render json: DoctorSerializer.new(doctors, { include: [:hospital] }).serialized_json
+    json_response({
+      data: DoctorSerializer.new(doctors, { include: [:hospital] }).as_json
+    }, :ok)
   end
 
   def create
@@ -16,7 +18,7 @@ class DoctorsController < ApplicationController
     auth_token = AuthenticateUser.new(@user.email, @user.password).call
 
     json_response({
-      data: DoctorSerializer.new(@resource, { include: [:user, :hospital] }).as_json['data'],
+      data: DoctorSerializer.new(@resource, { include: [:user, :hospital] }).as_json,
       message: 'Account created successfully',
       token: auth_token
     }, :created)
