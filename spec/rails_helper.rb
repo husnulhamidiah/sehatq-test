@@ -1,4 +1,11 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
+require 'simplecov'
+SimpleCov.start 'rails' do
+  add_filter '/channels/'
+  add_filter '/mailers/'
+  add_filter '/jobs/'
+end
+
 require 'database_cleaner'
 require 'spec_helper'
 
