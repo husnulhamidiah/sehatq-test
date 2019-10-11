@@ -25,6 +25,22 @@ RSpec.describe 'Appointments API', type: :request do
       end
     end
 
+    context 'when overlap' do
+      let!(:appointment) { create(
+        :appointment,
+        user_id: user.id,
+        doctor_id: doctor.id,
+        start_at: Date.today.beginning_of_week + 7.days + 9.hours,
+        end_at: Date.today.beginning_of_week + 7.days + 10.hours
+      ) }
+      before { post '/appointments', params: valid_attributes.to_json, headers: headers }
+
+      it 'does not creates a new appointment' do
+        expect(response).to have_http_status(422)
+        expect(json['data']).to be_nil
+      end
+    end
+
     context 'when invalid request' do
       let(:headers) { valid_headers.except('Authorization') }
       before { post "/appointments", headers: headers }
