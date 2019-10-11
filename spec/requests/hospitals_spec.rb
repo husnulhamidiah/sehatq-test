@@ -16,18 +16,6 @@ RSpec.describe 'Hospitals API', type: :request do
         expect(json['data']).not_to be_nil
       end
     end
-
-    context 'when invalid request' do
-      let(:headers) { valid_headers.except('Authorization') }
-      before { get '/hospitals', headers: headers }
-
-      it 'does not return hospitals' do
-        expect(response).to have_http_status(422)
-      end
-
-      it 'returns failure message' do
-        expect(json['message']).to match(/Missing token/)
-      end
-    end
+    
   end
 end
