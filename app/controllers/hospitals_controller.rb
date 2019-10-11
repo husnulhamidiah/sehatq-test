@@ -1,6 +1,8 @@
 class HospitalsController < ApplicationController
   def index
     hospitals = Hospital.includes(:doctors)
-    render json: HospitalSerializer.new(hospitals, { include: [:doctors] }).serialized_json
+    json_response({
+      data: HospitalSerializer.new(hospitals, { include: [:doctors] }).as_json
+    }, :ok)
   end
 end
