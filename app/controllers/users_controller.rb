@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     auth_token = AuthenticateUser.new(user.email, user.password).call
     
     json_response({
-      data: UserSerializer.new(user).as_json['data'],
+      data: UserSerializer.new(user).as_json,
       message: 'Account created successfully',
       token: auth_token
     }, :created)
