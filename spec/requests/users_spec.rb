@@ -36,4 +36,60 @@ RSpec.describe 'Users API', type: :request do
       end
     end
   end
+
+  describe 'GET /:id/appointments' do
+    let!(:user) { create(:user) }
+    let!(:hospital) { create(:hospital) }
+    let!(:doctor) { create(:doctor, hospital_id: hospital.id) }
+    let!(:appointment) { create(:appointment, user_id: user.id, doctor_id: doctor.id) }
+
+    let(:headers) { valid_headers }
+
+    context 'when valid request' do
+      before { get "/users/#{user.id}/appointments", headers: headers }
+
+      it 'return an appointment' do
+        expect(response).to have_http_status(200)
+        expect(json['data']).not_to be_nil
+      end
+    end
+
+    context 'when unauthorized user' do
+      let!(:another_user) { create(:user, id: 5739) }
+      before { get "/users/#{another_user.id}/appointments", headers: headers }
+
+      it 'does not return an appointment' do
+        expect(response).to have_http_status(401)
+      end
+
+      it 'returns unauthorized message' do
+        expect(json['message']).to match(/Unauthorized/)
+      end
+    end
+
+    context 'when user not found' do
+      before { get '/users/1390/appointments', headers: headers }
+
+      it 'does not return an appointment' do
+        expect(response).to have_http_status(404)
+      end
+
+      it 'returns unauthorized message' do
+        expect(json['message']).to match(/Couldn't find User with/)
+      end
+    end
+
+    context 'when invalid request' do
+      let(:headers) { valid_headers.except('Authorization') }
+      before { get "/users/#{user.id}/appointments", headers: headers }
+
+      it 'does not return an appointment' do
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns failure message' do
+        expect(json['message']).to match(/Missing token/)
+      end
+    end
+  end
 end
