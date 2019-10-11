@@ -75,7 +75,7 @@ RSpec.describe 'Users API', type: :request do
       end
 
       it 'returns unauthorized message' do
-        expect(json['message']).to match(/Couldn't find User with/)
+        expect(json['message']).to match(/Couldn't find User/)
       end
     end
 
