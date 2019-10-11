@@ -1,5 +1,5 @@
 class DoctorsController < ApplicationController
-  skip_before_action :authorize_request, only: :create
+  skip_before_action :authorize_request, only: [:create, :index]
   before_action :set_resource, only: [:appointments]
 
   def index
