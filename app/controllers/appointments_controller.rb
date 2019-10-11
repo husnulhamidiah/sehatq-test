@@ -1,6 +1,6 @@
 class AppointmentsController < ApplicationController
   def create
-    return head :unprocessable_entity if !valid?
+    return json_response({ message: 'Invalid parameters' }, :unprocessable_entity) if !valid?
     
     appointment = Appointment.new
     appointment.user_id = params[:user_id]
@@ -9,7 +9,9 @@ class AppointmentsController < ApplicationController
     appointment.end_at = end_date
     appointment.save!
 
-    render json: AppointmentSerializer.new(appointment, { include: [:user, :doctor] }).serialized_json
+    json_response({
+      data: AppointmentSerializer.new(appointment, { include: [:user, :doctor] }).as_json
+    }, :created)
   end
 
   private
