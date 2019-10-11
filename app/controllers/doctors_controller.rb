@@ -9,10 +9,17 @@ class DoctorsController < ApplicationController
 
   def create
     ActiveRecord::Base.transaction do
-      user = User.create!(user_params)
-      @resource = Doctor.create!(doctor_params.to_h.merge!({ user_id: user.id }))
+      @user = User.create!(user_params)
+      @resource = Doctor.create!(doctor_params.to_h.merge!({ user_id: @user.id }))
     end
-    render json: DoctorSerializer.new(@resource, { include: [:user, :hospital] }).serialized_json
+
+    auth_token = AuthenticateUser.new(@user.email, @user.password).call
+
+    json_response({
+      data: DoctorSerializer.new(@resource, { include: [:user, :hospital] }).as_json['data'],
+      message: 'Account created successfully',
+      token: auth_token
+    }, :created)
   end
 
   def appointments
